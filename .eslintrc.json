@@ -1,0 +1,11 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["plugin:sonarjs/recommended", "metarhia"],
+    "parserOptions": {
+        "ecmaVersion": 13
+    },
+    "rules": {}
+}

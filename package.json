@@ -1,0 +1,25 @@
+{
+  "name": "lab2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanyloTrofymov/web-lab2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanyloTrofymov/web-lab2/issues"
+  },
+  "homepage": "https://github.com/DanyloTrofymov/web-lab2#readme",
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-metarhia": "^7.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-sonarjs": "^0.10.0"
+  }
+}

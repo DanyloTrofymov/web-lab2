@@ -60,11 +60,11 @@ function validate(formdata) {
     let name = formdata.name;
     const emailExpression =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const nameExpression = /^[a-zA-ZА-ЯЁа-яё]+$/;
+    const nameExpression = /^[a-zA-ZА-ЯЁа-яё]{2,}\s?[a-zA-ZА-ЯЁа-яё]*$/;
     if (!emailExpression.test(String(email).toLowerCase())) {
         throw new Error();
     }
-    if (!nameExpression.test(String(name))) {
+    if (!nameExpression.test(String(name)) || name.length < 2) {
         throw new Error();
     }
 }

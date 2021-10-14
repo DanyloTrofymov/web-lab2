@@ -1,5 +1,6 @@
 import { createTransport } from "nodemailer";
 import sanitizeHtml from "sanitize-html";
+import { text } from "svelte/internal";
 require("dotenv").config();
 const from = `Form - ${process.env.EMAIL_ADRESS}`;
 
@@ -26,15 +27,20 @@ async function sendMail(options) {
 }
 // to change:
 async function formSubmit(formData) {
-    let html = "";
-    for (const option in formData) {
-        html += option + " : " + formData[option] + "<br/>";
-    }
+    let text =
+        "Name: " +
+        formData.name +
+        "<br/>" +
+        "Email: " +
+        formData.email +
+        "<br/>" +
+        "Message:" +
+        formData.text;
     return sendMail({
         from,
         to: process.env.EMAIL_TO_USER,
         subject: "New form submision",
-        html: sanitizeHtml(html),
+        html: sanitizeHtml(text),
     });
 }
 
@@ -49,18 +55,14 @@ const rateLimit = (ip, timeout = 60 * 1000) => {
 function validate(formdata) {
     let email = formdata.email;
     let name = formdata.name;
-    console.log(email);
-    console.log(name);
     const emailExpression =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const nameExpression = /^[a-zA-ZА-ЯЁа-яё]+$/;
-    console.log(emailExpression.test(String(email).toLowerCase()));
-    console.log(nameExpression.test(String(name)));
     if (!emailExpression.test(String(email).toLowerCase())) {
-        throw new Error();
+        throw new Error("Email invalid");
     }
     if (!nameExpression.test(String(name))) {
-        throw new Error();
+        throw new Error("Name invalid");
     }
 }
 module.exports = async (req, res) => {
@@ -78,7 +80,7 @@ module.exports = async (req, res) => {
     const formData =
         typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     try {
-        console.log(validate(formData));
+        validate(formData);
     } catch (e) {
         return res.status(402).json({
             status: 402,

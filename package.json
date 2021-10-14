@@ -1,36 +1,23 @@
 {
-  "name": "lab2",
+  "name": "svelte-app",
   "version": "1.0.0",
-  "description": "lab2 web",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "stylelint": "stylelint \"css/**/*.css\"",
-    "stylelint:fix": "stylelint \"css/**/*.css\" --fix",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prepare": "husky install",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --no-clear"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DanyloTrofymov/web-lab2.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DanyloTrofymov/web-lab2/issues"
-  },
-  "homepage": "https://github.com/DanyloTrofymov/web-lab2#readme",
   "devDependencies": {
-    "eslint": "^8.0.1",
-    "eslint-config-metarhia": "^7.0.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-sonarjs": "^0.10.0",
-    "husky": "^7.0.2",
-    "prettier": "2.4.1",
-    "stylelint": "^13.13.1",
-    "stylelint-config-standard": "^22.0.0"
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0"
+  },
+  "dependencies": {
+    "sirv-cli": "^1.0.0"
   }
 }

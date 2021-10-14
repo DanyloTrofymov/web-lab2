@@ -1,0 +1,9 @@
+:root {
+  --loader: #fff;
+  --background-color: 256, 256, 256;
+  --light-color: 238, 238, 238;
+  --dark-color: 0, 0, 0;
+  --success-color: 0, 256, 0;
+  --error-color: 256, 0, 0;
+  --background-items: 0, 220, 220;
+}

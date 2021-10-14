@@ -1,10 +1,17 @@
 {
   "name": "lab2",
   "version": "1.0.0",
-  "description": "",
+  "description": "lab2 web",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stylelint": "stylelint \"css/**/*.css\"",
+    "stylelint:fix": "stylelint \"css/**/*.css\" --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "repository": {
     "type": "git",

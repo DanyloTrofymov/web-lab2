@@ -3,6 +3,7 @@ import sanitizeHtml from "sanitize-html";
 import { text } from "svelte/internal";
 require("dotenv").config();
 const from = `Form - ${process.env.EMAIL_ADRESS}`;
+const history = new Map();
 
 function getTransporter() {
     return createTransport({
@@ -44,7 +45,7 @@ async function formSubmit(formData) {
     });
 }
 
-const rateLimit = (ip, limit = 5) => {
+const rateLimit = (ip, limit) => {
     if (!history.has(ip)) {
         history.set(ip, 0);
     }
@@ -61,23 +62,24 @@ function validate(formdata) {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const nameExpression = /^[a-zA-ZА-ЯЁа-яё]+$/;
     if (!emailExpression.test(String(email).toLowerCase())) {
-        throw new Error("Email invalid");
+        throw new Error();
     }
     if (!nameExpression.test(String(name))) {
-        throw new Error("Name invalid");
+        throw new Error();
     }
 }
 module.exports = async (req, res) => {
     try {
+        validate(req.body);
+    } catch (e) {
+        return res.status(402).json();
+    }
+
+    try {
+        console.log("try:" + req.headers["x-real-ip"]);
         rateLimit(req.headers["x-real-ip"], 5);
     } catch (e) {
         return res.status(429).json();
-    }
-    const formData = req.body;
-    try {
-        validate(formData);
-    } catch (e) {
-        return res.status(402).json();
     }
     const result = await formSubmit(req.body);
     res.json({ result });

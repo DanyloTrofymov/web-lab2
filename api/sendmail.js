@@ -25,7 +25,7 @@ async function sendMail(options) {
         throw new Error(error?.message);
     }
 }
-// to change:
+
 async function formSubmit(formData) {
     let text =
         "Name: " +
@@ -44,14 +44,16 @@ async function formSubmit(formData) {
     });
 }
 
-const history = new Map();
-
-const rateLimit = (ip, timeout = 60 * 1000) => {
-    if (history.get(ip) > Date.now() - timeout) {
+const rateLimit = (ip, limit = 5) => {
+    if (!history.has(ip)) {
+        history.set(ip, 0);
+    }
+    if (history.get(ip) > limit) {
         throw new Error();
     }
-    history.set(ip, Date.now());
+    history.set(ip, history.get(ip) + 1);
 };
+
 function validate(formdata) {
     let email = formdata.email;
     let name = formdata.name;
@@ -67,28 +69,15 @@ function validate(formdata) {
 }
 module.exports = async (req, res) => {
     try {
-        rateLimit(req.headers["x-real-ip"], 5 * 60 * 1000);
+        rateLimit(req.headers["x-real-ip"], 5);
     } catch (e) {
-        return res.status(429).json({
-            status: 429,
-            errors: ["Too many requests. Try in 5 minutes"],
-            result: {
-                success: false,
-            },
-        });
+        return res.status(429).json();
     }
-    const formData =
-        typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const formData = req.body;
     try {
         validate(formData);
     } catch (e) {
-        return res.status(402).json({
-            status: 402,
-            errors: ["Validation error: " + e.message],
-            result: {
-                success: false,
-            },
-        });
+        return res.status(402).json();
     }
     const result = await formSubmit(req.body);
     res.json({ result });

@@ -9,7 +9,6 @@
     	LOADER: '.form__loader',
 	};
 
-
 	const getFormData = (form) => {
     	const formData = {};
     	new FormData(form).forEach((value, key) => {
@@ -79,13 +78,8 @@
       <h3>Email form</h3>
       <div class="form__loader">
         <div class="loader">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
         </div>
       </div>
-	  
       <div class="form__section">
         <input type="text" name="name" placeholder="Name" on:input={event =>(nameValue = event.target.value)}/>
         <input type="email" name="email" placeholder="Email" on:input={event =>(emailValue = event.target.value)}/>
@@ -99,12 +93,12 @@
 
 <style>
 	:root {
-  	--loader: #fff;
     --background-color: lightblue;
     --form-background-color: #fff;
     --light-color: #eee;
     --dark-color: #000;
     --button-hover-color: gray;
+    --loader-color: gray;
   }
   main {
     margin: 0;
@@ -204,8 +198,8 @@
     height: 64px;
     margin: 8px;
     border-radius: 50%;
-    border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
+    border: 6px solid;
+    border-color: var(--button-hover-color) transparent var(--button-hover-color) transparent;
     animation: loader 1.2s linear infinite;
   }
   @keyframes loader {

@@ -64,7 +64,7 @@ function validate(formdata) {
     if (!emailExpression.test(String(email).toLowerCase())) {
         throw new Error();
     }
-    if (!nameExpression.test(String(name)) || name.length < 2) {
+    if (!nameExpression.test(String(name))) {
         throw new Error();
     }
 }

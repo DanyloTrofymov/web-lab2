@@ -1,0 +1,8 @@
+build
+coverage
+node_modules
+package.json
+package-*.json
+setupTypeScript.js
+.*
+*.css

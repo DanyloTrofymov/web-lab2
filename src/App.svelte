@@ -11,12 +11,12 @@
 
   const getFormData = (form) => {
     const formData = {};
-    Array.from(form.elements).forEach((value, key) => {
+    /*Array.from(form.elements).forEach((value, key) => {
+      formData[key] = value;
+    });*/
+    new FormData(form).forEach((value, key) => {
       formData[key] = value;
     });
-    /*	new FormData(form).forEach((value, key) => {
-        	formData[key] = value;
-    	});*/
     return formData;
   };
 

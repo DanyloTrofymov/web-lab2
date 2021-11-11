@@ -63,6 +63,7 @@ function validate(formdata) {
     throw new Error();
   }
 }
+
 export default async (req, res) => {
   try {
     validate(req.body);
@@ -76,6 +77,7 @@ export default async (req, res) => {
   } catch (e) {
     return res.status(429).json();
   }
+
   const result = await formSubmit(req.body);
   return res.json({ result });
 };

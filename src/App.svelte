@@ -11,36 +11,19 @@
 
   const getFormData = (form) => {
     const formData = {};
-    /*Array.from(form.elements).forEach((value, key) => {
-      formData[key] = value;
-    });*/
-    new FormData(form).forEach((value, key) => {
-      formData[key] = value;
-    });
+    formData.name = form.elements[0].value;
+    formData.email = form.elements[1].value;
+    formData.texm = form.elements[2].value;
     return formData;
   };
 
-  /*
-	const resetFields = (form) => {
-    	const fields = form.elements;
-    	for (const field of fields) {
-        	field.value = '';
-    	}
-	};
+  const resetFields = (form) => {
+    const fields = form.elements;
+    for (const field of fields) {
+      field.value = '';
+    }
+  };
 
-	const showFormMessage = (message) => {
-		const formMessage = document.querySelector('.form__message');
-
-    	if (!message.ok) {
-			formMessage.innerText = 'Unexpexted error';
-    	    formMessage.classList.add('form__error');
-   	 	} else {
-			formMessage.innerText = 'Sucsessful!';
-   	     	formMessage.classList.remove('form__error');
-   	 	}
-   	 	formMessage.style.visibility = 'visible';
-	};
-*/
   const submitHandler = async (event) => {
     const form = document.querySelector('form');
     const formLoader = document.querySelector('.form__loader');
@@ -61,6 +44,7 @@
       let status = promice.status;
       if (status == 200) {
         formMessage.innerText = 'Sucsessful!';
+        resetFields;
       } else if (status == 402) {
         formMessage.innerText = 'Validation error!';
       } else if (status == 429) {

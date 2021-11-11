@@ -31,8 +31,8 @@
 
     document.querySelector('.form__submit').disabled = true;
     formLoader.style.visibility = 'visible';
-
     const formData = getFormData(form);
+
     try {
       const promice = await fetch(url, {
         method: 'POST',
@@ -44,7 +44,7 @@
       let status = promice.status;
       if (status == 200) {
         formMessage.innerText = 'Sucsessful!';
-        resetFields;
+        resetFields(form);
       } else if (status == 402) {
         formMessage.innerText = 'Validation error!';
       } else if (status == 429) {

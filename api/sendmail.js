@@ -40,10 +40,10 @@ async function formSubmit(formData) {
 }
 
 const rateLimit = (ip, limit) => {
-  /*if (!history.has(ip)) {
+  if (!history.has(ip)) {
     history.set(ip, 0);
-  }*/
-  if (history.get(ip) > limit) {
+  }
+  if (history.get(ip) >= limit) {
     throw new Error();
   }
   history.set(ip, history.get(ip) + 1);
@@ -73,7 +73,7 @@ export default async (req, res) => {
 
   try {
     console.log('try:' + req.headers['x-real-ip']);
-    rateLimit(req.headers['x-real-ip'], 5);
+    rateLimit(req.headers['x-real-ip'], 3);
   } catch (e) {
     return res.status(429).json();
   }

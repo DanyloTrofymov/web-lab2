@@ -63,7 +63,7 @@ function validate(formdata) {
     throw new Error();
   }
 }
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     validate(req.body);
   } catch (e) {

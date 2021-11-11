@@ -1,13 +1,16 @@
 import { createTransport } from 'nodemailer';
 import sanitizeHtml from 'sanitize-html';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
+
 const from = `Form - ${process.env.EMAIL_ADRESS}`;
 const history = new Map();
+const transport = getTransporter();
 
 function getTransporter() {
   return createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
+    host: process.env.HOST,
+    port: process.env.PORT,
     secure: false,
     auth: {
       user: process.env.EMAIL_ADRESS,
@@ -18,7 +21,6 @@ function getTransporter() {
 
 async function sendMail(options) {
   try {
-    const transport = getTransporter();
     await transport.sendMail(options);
     return { success: true };
   } catch (error) {
@@ -27,15 +29,8 @@ async function sendMail(options) {
 }
 
 async function formSubmit(formData) {
-  const text =
-    'Name: ' +
-    formData.name +
-    '<br/>' +
-    'Email: ' +
-    formData.email +
-    '<br/>' +
-    'Message:' +
-    formData.text;
+  //eslint-disable-next-line
+  const text = `Name: ${formData.name} <br/> Email: ${formData.email} <br/> Message: ${formData.text}`;
   return sendMail({
     from,
     to: process.env.EMAIL_TO_USER,
@@ -45,9 +40,9 @@ async function formSubmit(formData) {
 }
 
 const rateLimit = (ip, limit) => {
-  if (!history.has(ip)) {
+  /*if (!history.has(ip)) {
     history.set(ip, 0);
-  }
+  }*/
   if (history.get(ip) > limit) {
     throw new Error();
   }

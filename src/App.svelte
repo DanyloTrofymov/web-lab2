@@ -1,24 +1,28 @@
 <script>
-	let emailValue = "";
-	let nameValue = "";
-	let messageValue = "";
-	const url = '/api/sendmail'
+  let emailValue = '';
+  let nameValue = '';
+  let messageValue = '';
+  const url = '/api/sendmail';
 
-	const FormSelectors = {
-		FORM: 'form',
-    	LOADER: '.form__loader',
-	};
+  const FormSelectors = {
+    FORM: 'form',
+    LOADER: '.form__loader',
+  };
 
-	const getFormData = (form) => {
-    	const formData = {};
-    	new FormData(form).forEach((value, key) => {
+  const getFormData = (form) => {
+    const formData = {};
+    Array.from(from.elements).forEach((value, key) => {
+      formData[key] = value;
+    });
+    /*	new FormData(form).forEach((value, key) => {
         	formData[key] = value;
-    	});
-    	return formData;
-	};
-	
+    	});*/
+    return formData;
+  };
+
+  /*
 	const resetFields = (form) => {
-    	const fields = form.querySelectorAll('input, textarea');
+    	const fields = form.elements;
     	for (const field of fields) {
         	field.value = '';
     	}
@@ -36,63 +40,77 @@
    	 	}
    	 	formMessage.style.visibility = 'visible';
 	};
-
-	const submitHandler = async (event) => {
-		const form = document.querySelector('form');
-		const formLoader = document.querySelector('.form__loader')
+*/
+  const submitHandler = async (event) => {
+    const form = document.querySelector('form');
+    const formLoader = document.querySelector('.form__loader');
     const formMessage = document.querySelector('.form__message');
 
-		document.getElementById('button').disabled = true;
-    	formLoader.style.visibility = 'visible';
+    document.querySelector('.form__submit').disabled = true;
+    formLoader.style.visibility = 'visible';
 
-		const formData = getFormData(form);
-	try {
-        const promice = await fetch(url, {
- 		method: 'POST',
-  		headers: {
-    	'Content-Type': 'application/json;charset=utf-8'
-  		},
-  		body: JSON.stringify(formData)
-		});
+    const formData = getFormData(form);
+    try {
+      const promice = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(formData),
+      });
       let status = promice.status;
-        if (status==200) {
-			    formMessage.innerText = 'Sucsessful!';
-        } else if(status==402) {
-          formMessage.innerText = 'Validation error!';
-        } else if(status==429){
-          formMessage.innerText = 'Too many requests!';
-        }
-		formMessage.style.visibility = 'visible';
-    }catch (exception) {
+      if (status == 200) {
+        formMessage.innerText = 'Sucsessful!';
+      } else if (status == 402) {
+        formMessage.innerText = 'Validation error!';
+      } else if (status == 429) {
+        formMessage.innerText = 'Too many requests!';
+      }
+      formMessage.style.visibility = 'visible';
+    } catch (exception) {
       formMessage.innerText = 'Unexpexted error!';
     }
 
-    document.getElementById('button').disabled = false;
+    document.querySelector('.form__submit').disabled = false;
     formLoader.style.visibility = 'hidden';
-};
+  };
 </script>
 
 <main>
-    <form class="form" on:submit|preventDefault={submitHandler}>
-      <p class="form__message">Error</p>
-      <h3>Email form</h3>
-      <div class="form__loader">
-        <div class="loader">
-        </div>
-      </div>
-      <div class="form__section">
-        <input type="text" name="name" placeholder="Name" on:input={event =>(nameValue = event.target.value)}/>
-        <input type="email" name="email" placeholder="Email" on:input={event =>(emailValue = event.target.value)}/>
-      </div>
-      <div class="form__section">
-        <textarea type ="text" name="text" placeholder="Message" on:input={event =>(messageValue = event.target.value)}></textarea>
-      </div>
-	  <button id="button" class="form__submit">Send</button>
-    </form>
+  <form class="form" on:submit|preventDefault={submitHandler}>
+    <p class="form__message">Error</p>
+    <h3>Email form</h3>
+    <div class="form__loader">
+      <div class="loader" />
+    </div>
+    <div class="form__section">
+      <input
+        type="text"
+        name="name"
+        placeholder="Name"
+        on:input={(event) => (nameValue = event.target.value)}
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        on:input={(event) => (emailValue = event.target.value)}
+      />
+    </div>
+    <div class="form__section">
+      <textarea
+        type="text"
+        name="text"
+        placeholder="Message"
+        on:input={(event) => (messageValue = event.target.value)}
+      />
+    </div>
+    <button class="form__submit">Send</button>
+  </form>
 </main>
 
 <style>
-	:root {
+  :root {
     --background-color: lightblue;
     --form-background-color: #fff;
     --light-color: #eee;
@@ -169,7 +187,7 @@
   }
 
   .form button:hover {
-    color: var(--button-hover-color); 
+    color: var(--button-hover-color);
   }
 
   .form__message {
@@ -187,19 +205,20 @@
   }
 
   .loader {
-   display: inline-block;
+    display: inline-block;
     width: 80px;
     height: 80px;
   }
   .loader:after {
-    content: " ";
+    content: ' ';
     display: block;
     width: 64px;
     height: 64px;
     margin: 8px;
     border-radius: 50%;
     border: 6px solid;
-    border-color: var(--button-hover-color) transparent var(--button-hover-color) transparent;
+    border-color: var(--button-hover-color) transparent
+      var(--button-hover-color) transparent;
     animation: loader 1.2s linear infinite;
   }
   @keyframes loader {

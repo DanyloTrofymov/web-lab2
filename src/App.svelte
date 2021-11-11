@@ -11,7 +11,7 @@
 
   const getFormData = (form) => {
     const formData = {};
-    Array.from(from.elements).forEach((value, key) => {
+    Array.from(form.elements).forEach((value, key) => {
       formData[key] = value;
     });
     /*	new FormData(form).forEach((value, key) => {

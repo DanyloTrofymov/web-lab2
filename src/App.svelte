@@ -1,23 +1,9 @@
 <script>
-  let emailValue = '';
-  let nameValue = '';
-  let messageValue = '';
   const url = '/api/sendmail';
+  const formData = {};
 
-  const FormSelectors = {
-    FORM: 'form',
-    LOADER: '.form__loader',
-  };
-
-  const getFormData = (form) => {
-    const formData = {};
-    formData.name = form.elements[0].value;
-    formData.email = form.elements[1].value;
-    formData.texm = form.elements[2].value;
-    return formData;
-  };
-
-  const resetFields = (form) => {
+  const resetFields = () => {
+    const form = document.querySelector('.form');
     const fields = form.elements;
     for (const field of fields) {
       field.value = '';
@@ -25,13 +11,11 @@
   };
 
   const submitHandler = async (event) => {
-    const form = document.querySelector('form');
     const formLoader = document.querySelector('.form__loader');
     const formMessage = document.querySelector('.form__message');
 
     document.querySelector('.form__submit').disabled = true;
     formLoader.style.visibility = 'visible';
-    const formData = getFormData(form);
 
     try {
       const promice = await fetch(url, {
@@ -43,16 +27,16 @@
       });
       let status = promice.status;
       if (status == 200) {
-        formMessage.innerText = 'Sucsessful!';
-        resetFields(form);
-      } else if (status == 402) {
-        formMessage.innerText = 'Validation error!';
-      } else if (status == 429) {
-        formMessage.innerText = 'Too many requests!';
+        resetFields();
+        formMessage.innerText = 'Successful!';
+      } else {
+        const response = await promice.json();
+        formMessage.innerText = response.message;
       }
       formMessage.style.visibility = 'visible';
     } catch (exception) {
       formMessage.innerText = 'Unexpexted error!';
+      formMessage.style.visibility = 'visible';
     }
 
     document.querySelector('.form__submit').disabled = false;
@@ -72,13 +56,13 @@
         type="text"
         name="name"
         placeholder="Name"
-        on:input={(event) => (nameValue = event.target.value)}
+        bind:value={formData.name}
       />
       <input
         type="email"
         name="email"
         placeholder="Email"
-        on:input={(event) => (emailValue = event.target.value)}
+        bind:value={formData.email}
       />
     </div>
     <div class="form__section">
@@ -86,7 +70,7 @@
         type="text"
         name="text"
         placeholder="Message"
-        on:input={(event) => (messageValue = event.target.value)}
+        bind:value={formData.text}
       />
     </div>
     <button class="form__submit">Send</button>

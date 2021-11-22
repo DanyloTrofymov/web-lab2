@@ -6,6 +6,10 @@ dotenv.config();
 const from = `Form - ${process.env.EMAIL_ADRESS}`;
 const history = new Map();
 const transport = getTransporter();
+const emailExpression =
+  //eslint-disable-next-line
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const nameExpression = /^[a-zA-ZА-ЯЁа-яё]{2,}\s?[a-zA-ZА-ЯЁа-яё]*$/;
 
 function getTransporter() {
   return createTransport({
@@ -40,22 +44,18 @@ async function formSubmit(formData) {
 }
 
 const rateLimit = (ip, limit) => {
-  if (!history.has(ip)) {
-    history.set(ip, 0);
-  }
+  let countIp = history.get(ip);
+  countIp = countIp ?? 0;
   if (history.get(ip) >= limit) {
     throw new Error();
   }
-  history.set(ip, history.get(ip) + 1);
+  history.set(ip, countIp + 1);
 };
 
 function validate(formdata) {
   const email = formdata.email;
   const name = formdata.name;
-  const emailExpression =
-    //eslint-disable-next-line
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const nameExpression = /^[a-zA-ZА-ЯЁа-яё]{2,}\s?[a-zA-ZА-ЯЁа-яё]*$/;
+
   if (!emailExpression.test(String(email).toLowerCase())) {
     throw new Error();
   }
@@ -68,14 +68,14 @@ export default async (req, res) => {
   try {
     validate(req.body);
   } catch (e) {
-    return res.status(402).json();
+    return res.status(402).json({ message: 'Validation error!' });
   }
 
   try {
     console.log('try:' + req.headers['x-real-ip']);
     rateLimit(req.headers['x-real-ip'], 3);
   } catch (e) {
-    return res.status(429).json();
+    return res.status(429).json({ message: 'Too many requests!' });
   }
 
   const result = await formSubmit(req.body);

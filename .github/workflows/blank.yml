@@ -1,9 +1,12 @@
 name: Node.js CI
+
 on:
   push:
     branches: [ svetle ]
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:

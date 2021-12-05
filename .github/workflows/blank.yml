@@ -32,7 +32,7 @@ jobs:
         working-directory: ./laba2
         run: |
           npm ci
-          npm install -g eslint
+          npm install eslint
       - run: npm run build --if-present
       - name: Eslint working flow
         working-directory: ./laba2

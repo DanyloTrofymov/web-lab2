@@ -95,6 +95,7 @@
   }
   * {
     box-sizing: border-box;
+    margin: 0;
   }
   .form {
     background-color: var(--form-background-color);

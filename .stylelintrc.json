@@ -1,3 +1,7 @@
 {
-  "extends": ["stylelint-config-standard"]
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "value-list-comma-newline-after": "never-multi-line",
+    "declaration-colon-newline-after": "always-multi-line"
+  }
 }

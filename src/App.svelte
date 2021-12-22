@@ -79,7 +79,6 @@
 
 <style>
   :root {
-    --background-color: lightblue;
     --form-background-color: #fff;
     --light-color: #eee;
     --dark-color: #000;
@@ -89,13 +88,10 @@
   main {
     margin: 0;
     display: flex;
-    max-width: 100%;
-    height: 100vh;
-    background-color: var(--background-color);
+    min-height: 100vh;
   }
   * {
     box-sizing: border-box;
-    margin: 0;
   }
   .form {
     background-color: var(--form-background-color);

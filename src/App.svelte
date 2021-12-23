@@ -10,10 +10,11 @@
     }
   };
 
+  let formLoader;
+  let enabled = false;
   const submitHandler = async (event) => {
-    const formLoader = document.querySelector('.form__loader');
 
-    document.querySelector('.form__submit').disabled = true;
+    enabled = true;
     formLoader.style.visibility = 'visible';
 
     try {
@@ -38,7 +39,7 @@
       formMessage.style.visibility = 'visible';
     }
 
-    document.querySelector('.form__submit').disabled = false;
+    enabled = false
     formLoader.style.visibility = 'hidden';
   };
 </script>
@@ -47,7 +48,7 @@
   <form class="form" on:submit|preventDefault={submitHandler}>
     <p class="form__message">{message}</p>
     <h3>Email form</h3>
-    <div class="form__loader">
+    <div class="form__loader" bind:this={formLoader}>
       <div class="loader" />
     </div>
     <div class="form__section">
@@ -72,7 +73,12 @@
         bind:value={formData.text}
       />
     </div>
-    <button class="form__submit">Send</button>
+    {#if enabled}
+    <button class="form__submit" >Send</button>
+    {:else}
+    <button class="form__submit" disabled>Send</button>
+    {/if}
+
   </form>
 </main>
 
@@ -92,6 +98,7 @@
   * {
     box-sizing: border-box;
   }
+
   .form {
     background-color: var(--form-background-color);
     border-radius: 5px;

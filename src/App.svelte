@@ -11,7 +11,7 @@
   };
 
   let formLoader;
-  let enabled = false;
+  let enabled = true;
   const submitHandler = async (event) => {
 
     enabled = true;

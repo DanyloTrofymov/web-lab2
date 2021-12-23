@@ -34,7 +34,7 @@
         const response = await promice.json();
         message = response.message;
       }
-    } catch (exception) {
+    } catch {
       message = 'Unexpexted error!';
     } finally {
       messageEnabled = true;

@@ -46,10 +46,10 @@
 </script>
 
 <main>
-  {#if messageEnabled}
-    <p class="form__message">{message}</p>
-  {/if}
   <form class="form" on:submit|preventDefault={submitHandler}>
+    {#if messageEnabled}
+      <p class="form__message">{message}</p>
+    {/if}
     <h3>Email form</h3>
     <div class="form__loader" bind:this={formLoader}>
       <div class="loader" />

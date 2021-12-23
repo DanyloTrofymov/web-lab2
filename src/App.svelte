@@ -1,7 +1,7 @@
 <script>
   const url = '/api/sendmail';
   const formData = {};
-
+  const message = 'error';
   const resetFields = () => {
     const form = document.querySelector('.form');
     const fields = form.elements;
@@ -12,7 +12,6 @@
 
   const submitHandler = async (event) => {
     const formLoader = document.querySelector('.form__loader');
-    const formMessage = document.querySelector('.form__message');
 
     document.querySelector('.form__submit').disabled = true;
     formLoader.style.visibility = 'visible';
@@ -28,14 +27,14 @@
       let status = promice.status;
       if (status == 200) {
         resetFields();
-        formMessage.innerText = 'Successful!';
+        message = 'Successful!';
       } else {
         const response = await promice.json();
-        formMessage.innerText = response.message;
+        message = response.message;
       }
       formMessage.style.visibility = 'visible';
     } catch (exception) {
-      formMessage.innerText = 'Unexpexted error!';
+      message = 'Unexpexted error!';
       formMessage.style.visibility = 'visible';
     }
 
@@ -46,7 +45,7 @@
 
 <main>
   <form class="form" on:submit|preventDefault={submitHandler}>
-    <p class="form__message">Error</p>
+    <p class="form__message">{message}</p>
     <h3>Email form</h3>
     <div class="form__loader">
       <div class="loader" />

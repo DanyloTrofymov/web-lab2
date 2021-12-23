@@ -1,7 +1,7 @@
 <script>
   const url = '/api/sendmail';
   const formData = {};
-  const message = 'error';
+
   const resetFields = () => {
     const form = document.querySelector('.form');
     const fields = form.elements;
@@ -10,6 +10,7 @@
     }
   };
 
+  let message = 'error';
   let formLoader;
   let messageEnabled = false;
   let buttonEnabled = true;

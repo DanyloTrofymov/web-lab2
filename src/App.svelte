@@ -11,6 +11,7 @@
   };
 
   let formLoader;
+  let messageEnabled = false;
   let buttonEnabled = true;
   const submitHandler = async (event) => {
 
@@ -37,6 +38,7 @@
     } catch (exception) {
       message = 'Unexpexted error!';
     } finally{
+      messageEnabled = true;
       buttonEnabled = true;
       formLoader.style.visibility = 'hidden';
     }
@@ -45,7 +47,9 @@
 
 <main>
   <form class="form" on:submit|preventDefault={submitHandler}>
-    <p class="form__message">{message}</p>
+    {#if messageEnabled}
+      <p class="form__message">{message}</p>
+    {/if}
     <h3>Email form</h3>
     <div class="form__loader" bind:this={formLoader}>
       <div class="loader" />

@@ -14,7 +14,6 @@
   let messageEnabled = false;
   let buttonEnabled = true;
   const submitHandler = async (event) => {
-
     buttonEnabled = false;
     formLoader.style.visibility = 'visible';
 
@@ -37,7 +36,7 @@
       }
     } catch (exception) {
       message = 'Unexpexted error!';
-    } finally{
+    } finally {
       messageEnabled = true;
       buttonEnabled = true;
       formLoader.style.visibility = 'hidden';
@@ -77,11 +76,10 @@
       />
     </div>
     {#if buttonEnabled}
-    <button class="form__submit" >Send</button>
+      <button class="form__submit">Send</button>
     {:else}
-    <button class="form__submit" disabled>Send</button>
+      <button class="form__submit" disabled>Send</button>
     {/if}
-
   </form>
 </main>
 

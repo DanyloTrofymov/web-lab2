@@ -11,10 +11,10 @@
   };
 
   let formLoader;
-  let enabled = true;
+  let buttonEnabled = true;
   const submitHandler = async (event) => {
 
-    enabled = true;
+    buttonEnabled = false;
     formLoader.style.visibility = 'visible';
 
     try {
@@ -29,18 +29,17 @@
       if (status == 200) {
         resetFields();
         message = 'Successful!';
+        return;
       } else {
         const response = await promice.json();
         message = response.message;
       }
-      formMessage.style.visibility = 'visible';
     } catch (exception) {
       message = 'Unexpexted error!';
-      formMessage.style.visibility = 'visible';
+    } finally{
+      buttonEnabled = true;
+      formLoader.style.visibility = 'hidden';
     }
-
-    enabled = false
-    formLoader.style.visibility = 'hidden';
   };
 </script>
 
@@ -73,7 +72,7 @@
         bind:value={formData.text}
       />
     </div>
-    {#if enabled}
+    {#if buttonEnabled}
     <button class="form__submit" >Send</button>
     {:else}
     <button class="form__submit" disabled>Send</button>

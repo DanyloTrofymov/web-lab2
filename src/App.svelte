@@ -47,7 +47,7 @@
 <main>
   <form class="form" on:submit|preventDefault={submitHandler}>
     {#if messageEnabled}
-      <p class="form__message">{message}</p>
+      <p>{message}</p>
     {/if}
     <h3>Email form</h3>
     <div class="form__loader" bind:this={formLoader}>
@@ -76,9 +76,9 @@
       />
     </div>
     {#if buttonEnabled}
-      <button class="form__submit">Send</button>
+      <button>Send</button>
     {:else}
-      <button class="form__submit" disabled>Send</button>
+      <button disabled>Send</button>
     {/if}
   </form>
 </main>
@@ -164,7 +164,6 @@
 
   .form__message {
     background-color: var(--form-background-color);
-    visibility: hidden;
     margin-top: 0;
     margin-bottom: 0;
     position: absolute;

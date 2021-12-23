@@ -47,7 +47,7 @@
 
 <main>
   {#if messageEnabled}
-    <p>{message}</p>
+    <p class="form__message">{message}</p>
   {/if}
   <form class="form" on:submit|preventDefault={submitHandler}>
     <h3>Email form</h3>

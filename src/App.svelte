@@ -122,7 +122,6 @@
     bottom: 0;
     left: 0;
     right: 0;
-    visibility: hidden;
     z-index: 1;
   }
 

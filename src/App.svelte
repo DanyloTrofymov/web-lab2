@@ -10,8 +10,8 @@
     }
   };
 
-  let message = 'error';
-  let formLoader;
+  let message = '';
+  let formLoader = false;
   let buttonEnabled = true;
   const submitHandler = async (event) => {
     buttonEnabled = false;

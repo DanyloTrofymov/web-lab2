@@ -12,11 +12,10 @@
 
   let message = 'error';
   let formLoader;
-  let messageEnabled = false;
   let buttonEnabled = true;
   const submitHandler = async (event) => {
     buttonEnabled = false;
-    formLoader.style.visibility = 'visible';
+    formLoader = true;
 
     try {
       const promice = await fetch(url, {
@@ -38,22 +37,23 @@
     } catch {
       message = 'Unexpexted error!';
     } finally {
-      messageEnabled = true;
       buttonEnabled = true;
-      formLoader.style.visibility = 'hidden';
+      formLoader = false;
     }
   };
 </script>
 
 <main>
   <form class="form" on:submit|preventDefault={submitHandler}>
-    {#if messageEnabled}
+    {#if message}
       <p class="form__message">{message}</p>
     {/if}
     <h3>Email form</h3>
-    <div class="form__loader" bind:this={formLoader}>
-      <div class="loader" />
-    </div>
+    {#if formLoader}
+      <div class="form__loader">
+        <div class="loader" />
+      </div>
+    {/if}
     <div class="form__section">
       <input
         type="text"

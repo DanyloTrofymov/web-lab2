@@ -50,9 +50,7 @@
     {/if}
     <h3>Email form</h3>
     {#if formLoader}
-      <div class="form__loader">
-        <div class="loader" />
-      </div>
+      <div class="loader" />
     {/if}
     <div class="form__section">
       <input
@@ -180,6 +178,7 @@
     display: inline-block;
     width: 80px;
     height: 80px;
+    z-index: 1;
   }
   .loader:after {
     content: ' ';

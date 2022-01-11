@@ -33,8 +33,8 @@
       } else {
         message = result.message;
       }
-    } catch (e) {
-      message = e.message;
+    } catch {
+      message = 'Unexpected error';
     } finally {
       buttonEnabled = true;
       formLoader = false;

@@ -26,13 +26,14 @@
         },
         body: JSON.stringify(formData),
       });
-      const result = await promice.json();
-      if (result.result.success) {
+      const response = await promice.json();
+      console.log(response);
+      if (response.result.success) {
         message = 'Success!';
         resetFields();
         return;
       }
-      message = result.message;
+      message = response.message;
     } catch {
       message = 'Unexpected error';
     } finally {

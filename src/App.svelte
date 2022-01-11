@@ -12,10 +12,8 @@
 
   let message = '';
   let formLoader = false;
-  let buttonEnabled = true;
 
   const submitHandler = async (event) => {
-    buttonEnabled = false;
     formLoader = true;
 
     try {
@@ -28,16 +26,18 @@
       });
       const response = await promice.json();
       console.log(response);
+      console.log(response.message);
       if (response.result.success) {
         message = 'Success!';
         resetFields();
         return;
       }
+      console.log('im here');
       message = response.message;
+      return;
     } catch {
       message = 'Unexpected error';
     } finally {
-      buttonEnabled = true;
       formLoader = false;
     }
   };
@@ -76,7 +76,7 @@
         bind:value={formData.text}
       />
     </div>
-    {#if buttonEnabled}
+    {#if !formLoader}
       <button>Send</button>
     {:else}
       <button disabled>Send</button>

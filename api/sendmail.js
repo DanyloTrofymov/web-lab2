@@ -68,14 +68,24 @@ export default async (req, res) => {
   try {
     validate(req.body);
   } catch (e) {
-    return res.status(402).json({ message: 'Validation error!' });
+    return res.status(402).json({
+      message: 'Validation error!',
+      result: {
+        success: false,
+      },
+    });
   }
 
   try {
     console.log('try:' + req.headers['x-real-ip']);
     rateLimit(req.headers['x-real-ip'], 3);
   } catch (e) {
-    return res.status(429).json({ message: 'Too many requests!' });
+    return res.status(429).json({
+      message: 'Too many requests!',
+      result: {
+        success: false,
+      },
+    });
   }
 
   const result = await formSubmit(req.body);

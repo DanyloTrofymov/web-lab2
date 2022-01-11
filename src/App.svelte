@@ -27,7 +27,12 @@
         body: JSON.stringify(formData),
       });
       const result = await response.json();
-      message = result.result.success ? 'Success!' : result.errors.join('\n');
+      if (result.result.success) {
+        message = 'Success!';
+        resetFields();
+      } else {
+        message = result.errors.join('\n');
+      }
     } catch (e) {
       message = e.message;
     } finally {

@@ -30,9 +30,9 @@
       if (result.result.success) {
         message = 'Success!';
         resetFields();
-      } else {
-        message = result.message;
+        return;
       }
+      message = result.message;
     } catch {
       message = 'Unexpected error';
     } finally {

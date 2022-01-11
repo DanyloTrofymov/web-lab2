@@ -44,8 +44,7 @@ async function formSubmit(formData) {
 }
 
 const rateLimit = (ip, limit) => {
-  let countIp = history.get(ip);
-  countIp = countIp ?? 0;
+  const countIp = history.get(ip) || 0;
   if (history.get(ip) >= limit) {
     throw new Error();
   }
@@ -88,6 +87,15 @@ export default async (req, res) => {
     });
   }
 
-  const result = await formSubmit(req.body);
-  return res.json({ result });
+  try {
+    const result = await formSubmit(req.body);
+    return res.json({ result });
+  } catch (e) {
+    return res.status(500).json({
+      message: e,
+      result: {
+        success: false,
+      },
+    });
+  }
 };

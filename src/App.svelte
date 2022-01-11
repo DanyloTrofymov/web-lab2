@@ -2,14 +2,6 @@
   const url = '/api/sendmail';
   const formData = {};
 
-  const resetFields = () => {
-    const form = document.querySelector('.form');
-    const fields = form.elements;
-    for (const field of fields) {
-      field.value = '';
-    }
-  };
-
   let message = '';
   let formLoader = false;
 
@@ -27,7 +19,7 @@
       const response = await promice.json();
       if (response.result.success) {
         message = 'Success!';
-        resetFields();
+        document.querySelector('.form').reset();
         return;
       }
       message = response.message;

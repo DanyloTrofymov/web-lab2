@@ -26,7 +26,7 @@
         },
         body: JSON.stringify(formData),
       });
-      const result = await response.json();
+      const result = await promice.json();
       if (result.result.success) {
         message = 'Success!';
         resetFields();

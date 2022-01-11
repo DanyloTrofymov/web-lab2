@@ -13,6 +13,7 @@
   let message = '';
   let formLoader = false;
   let buttonEnabled = true;
+
   const submitHandler = async (event) => {
     buttonEnabled = false;
     formLoader = true;
@@ -25,17 +26,10 @@
         },
         body: JSON.stringify(formData),
       });
-      let status = promice.status;
-      if (status == 200) {
-        resetFields();
-        message = 'Successful!';
-        return;
-      } else {
-        const response = await promice.json();
-        message = response.message;
-      }
-    } catch {
-      message = 'Unexpexted error!';
+      const result = await response.json();
+      message = result.result.success ? 'Success!' : result.errors.join('\n');
+    } catch (e) {
+      message = e.message;
     } finally {
       buttonEnabled = true;
       formLoader = false;

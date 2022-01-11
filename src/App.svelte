@@ -25,16 +25,12 @@
         body: JSON.stringify(formData),
       });
       const response = await promice.json();
-      console.log(response);
-      console.log(response.message);
       if (response.result.success) {
         message = 'Success!';
         resetFields();
         return;
       }
-      console.log('im here');
       message = response.message;
-      return;
     } catch {
       message = 'Unexpected error';
     } finally {

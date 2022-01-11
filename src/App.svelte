@@ -31,7 +31,7 @@
         message = 'Success!';
         resetFields();
       } else {
-        message = result.errors.join('\n');
+        message = result.message;
       }
     } catch (e) {
       message = e.message;

@@ -4,6 +4,7 @@
 
   let message = '';
   let formLoader = false;
+  let form;
 
   const submitHandler = async (event) => {
     formLoader = true;
@@ -19,7 +20,7 @@
       const response = await promice.json();
       if (response.result.success) {
         message = 'Success!';
-        document.querySelector('.form').reset();
+        form.reset();
         return;
       }
       message = response.message;
@@ -32,7 +33,7 @@
 </script>
 
 <main>
-  <form class="form" on:submit|preventDefault={submitHandler}>
+  <form class="form" on:submit|preventDefault={submitHandler} bind:this={form}>
     {#if message}
       <p class="form__message">{message}</p>
     {/if}
